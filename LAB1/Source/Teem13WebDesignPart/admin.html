@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<title>login</title>
+<script type="text/javascript" src="js/cardview.js"></script>
+    <link rel="stylesheet" href="css/login.css">
+
+
+</head>
+<body>
+<div id="wrapper">
+  <div class="bgImg">
+    <div class="blur"></div>
+  </div>
+  <div class="signOut" style="width: 40%;">
+    <h1>Login</h1>
+    <div class="container1" style="width: 80%;">
+      <form action="#" method="post">
+        <div class="form-group">
+            <label>Username:</label>
+            <input style="width: 120%;" type="text" class="outUserName" name="outUserName">
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input style="width: 120%;" type="password" class="outPwd" name="outPwd">
+        </div>
+        <div class="form-group formGroup">
+            <span class="remeberUser">
+              <input type="checkbox">Remember me
+            </span>
+            <span class="forgetPwd">
+                <a href="#" rel="nofollow">Forgot Password?</a>
+            </span>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btnSignUp" id="btnSignUp1">Sign Up</button>
+            <a href="home.html">
+                <button type="button" class="btn btnSignIn" id="btnSignIn">Sign In</button></a>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="signIn">
+    <h1>oneGo</h1>
+    <div class="container1">
+      <form action="#" method="post">
+        <div class="form-group">
+            <label>Username:</label>
+            <input type="text" class="inUserName" name="inUserName" placeholder="Please input username">
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" class="inPwd1" name="inPwd1" placeholder="inout Password">
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" class="inPwd2" name="inPwd2" placeholder="inout Password">
+        </div>
+        <div class="form-group">
+            <label>Code:</label>
+            <input type="text" class="yzm" name="yzm" placeholder="Code">
+            <button type="button" class="sendPhone">Send Message</button>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btnSignUp" id="btnSignUp">Sign Up</button>
+            <button type="button" class="btn btnReset" id="btnReset">Go Back</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>
