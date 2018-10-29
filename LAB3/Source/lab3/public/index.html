@@ -1,0 +1,222 @@
+<html ng-app="demoMongo" ng-controller="MongoRestController">
+<head >
+    <title>ICP9 Page</title>
+    <link href="css\style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href='httpS://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        .site-bg {
+            position: fixed;
+            height: 100%;
+            width: 100%;
+            z-index: 0;
+            background-image: url(/images/bg.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .site-bg-overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background: rgba(92, 180, 142, 0.4);
+        }
+
+    </style>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+          height: 400px;  /* The height is 400 pixels */
+          width: 100%;  /* The width is the width of the web page */
+          background-color: grey;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap" style="width:50%;">
+    <div class="contact-form" style="width:100%;" ng*if="message">
+        
+        <form class="contact_form"  style="background: #FFF; width:100%;" ng-submit="insertData()" name="contact_form">
+            <h4>Welcome to DealSuperior</h4>
+            <h1 onclick="showAdd()">Add Discover</h1>
+            <div id="addPart" style="display:none;">
+            <ul>
+                <li style="width:100%;">
+                    <input type="text" class="textbox1" name="name" placeholder="Prodcut Name" ng-model="formData.name" required />
+                    <span class="form_hint">Enter Product Name</span>
+                </li>
+                <li style="width:100%;">
+                    <input type="text" class="textbox1" name="store" ng-model="formData.store" placeholder="Shopping Store" required />
+                    <span class="form_hint">Enter a Shopping Store</span>
+                </li>
+                <li style="width:100%;">
+                    <input type="text" class="textbox1" name="S" ng-model="formData.S" placeholder="Description" required />
+                    <span class="form_hint">Enter a Description</span>
+                </li>
+                <li style="width:100%;">
+                    <input type="text" class="textbox1" name="price" ng-model="formData.price" placeholder="Price" required />
+                    <span class="form_hint">Enter the price</span>
+                </li>
+            </ul>
+            <input type="submit" name="Add" style="width:100%;" value="Add"/>
+            </div>
+        </form>
+        <form class="contact_form"  style="background: #FFF; width:100%;" ng-submit="searchData()" name="contact_form">
+            
+            <h3>Search Product</h3>
+            <ul>
+                <li style="width:100%;">
+                    <input type="text" class="textbox1" name="search2" ng-model="searchData.search2" placeholder="Input Product Name" required />
+                    <span class="form_hint">Enter Name</span>
+                </li>
+            </ul>
+            <input  type="submit" name="Submit" style="width:100%;" value="Submit"/>
+            <input type="display"  onclick="showDIV(),showDIV3()" style="width:100%;" value="Show result"/>
+            <div id="myDIV" style="display: none;">
+                <TABLE BORDER=2 CELLPADDING=4> <TR> <TH style="color: aliceblue; background:#FF9933" COLSPAN=2>Product Information by Searching </TH> </TR>
+                    <TR> <TD>Name</TD> <TD>{{message.items[0].name}}</TD> </TR>
+                    <TR> <TD>Price</TD> <TD>${{message.items[0].price}}</TD> </TR>
+                    <TR> <TD>Store</TD> <TD>{{message.items[0].store}}</TD> </TR>
+                    <TR> <TH style="color: aliceblue; background:#FF9933" COLSPAN=2 BGCOLOR="#5e5e5e">{{message.items[0].S}}</TH> </TR>
+                </TABLE>
+            </div>
+        </form>
+        
+    <div id="myDIV3" style="display: none;">
+        <form class="contact_form"  style="background: #FFF; width:100%;" ng-submit="deleteData()" name="contact_form">
+            <input type="submit" name="Add" style="width:100%;" value="Delete"/>
+        </form>
+
+        <form class="contact_form"  style="background: #FFF; width:100%;" ng-submit="updateData()" name="contact_form">
+                <input type="display" onclick="showDIV2()" style="width:100%;" value="Update the result"/>
+                <div id="myDIV2" style="display: none;">
+                    <form class="contact_form"  style="background: #FFF; width:100%;" ng-submit="updateData()" name="contact_form">
+                    <ul>
+                        <li style="width:100%;">
+                            <input type="text" id="name1" name="name" ng-model="upData.name" placeholder="{{message.items[0].name}}" required />
+                            <span class="form_hint">Enter New Name</span>                                    
+                        </li>
+                        <li style="width:100%;">
+                            <input type="text" id="store1" name="store" ng-model="upData.store" placeholder="{{message.items[0].store}}" required />
+                            <span class="form_hint">Enter New Shopping Store</span>
+                        </li>
+                        <li style="width:100%;">
+                                <input type="text" id="des1" name="S" ng-model="upData.S" placeholder="{{message.items[0].S}}" required />
+                                <span class="form_hint">Enter New Description</span>
+                        </li>
+                        <li style="width:100%;">
+                                <input type="text" id="price1" name="price" ng-model="upData.price" placeholder="{{message.items[0].price}}" required />
+                                <span class="form_hint">Enter New price</span>
+                        </li>
+                        <li style="width:100%;">
+                                <input disabled type="text" id="id1" name="id" ng-model="upData.id" placeholder="{{message.items[0]._id}}" />
+                        </li>
+                    </ul>
+                    <input type="submit" name="updata" style="width:100%;" value="Update"/>
+                    </form>
+                </div>
+            </form>  
+
+            <form class="contact_form"  style="background: #FFF; width:100%;" ng-submit="googleMap()" name="contact_form">
+                <input type="display" onclick="showMap()" name="updata" style="width:100%;" value="Get Walmart Location"/>
+                <div id="map" style="display:none;"></div>
+            </form>
+    </div>
+
+        <div class="clear"></div>
+    </div>
+    <div class="footer">
+    </div>
+</div>
+
+<script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: {lat: 39.0328348, lng: -94.5768062}
+            });
+            // Create an array of alphabetical characters used to label the markers.
+            var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            // Add some markers to the map.
+            // Note: The code uses the JavaScript Array.prototype.map() method to
+            // create an array of markers based on a given "locations" array.
+            // The map() method here has nothing to do with the Google Maps API.
+            var markers = locations.map(function(location, i) {
+                return new google.maps.Marker({
+                    position: location,
+                    label: labels[i % labels.length]
+                });
+            });
+            // Add a marker clusterer to manage the markers.
+            var markerCluster = new MarkerClusterer(map, markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+                });
+            }
+            var locations = [
+            {lat: 39.0746623, lng: -94.6560921},
+            {lat: 39.0436097, lng: -94.6192878},
+            {lat: 39.0357535, lng: -94.6408846},
+            {lat: 39.0449191, lng: -94.4427913},
+            {lat: 38.9838692, lng: -94.45965},
+            {lat: 38.9658221, lng: -94.6687745}
+            ]
+    </script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+</script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCLSmTEPyPd8lKsjGC2xtVOPgUq5fHDpPs&callback=initMap">
+</script>
+<script>
+    showDIV = function(){
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+    showDIV2 = function(){
+    var x = document.getElementById("myDIV2");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+    showDIV3 = function(){
+    var x = document.getElementById("myDIV3");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+    showAdd = function(){
+    var x = document.getElementById("addPart");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+    showMap = function(){
+    var x = document.getElementById("map");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+<script type="text/javascript" src="httpS://code.angularjs.org/1.1.1/angular.js"></script>
+<script type="text/javascript" src="httpS://code.angularjs.org/1.1.1/angular-resource.js"></script>
+<script type="text/javascript" src="httpS://code.angularjs.org/1.1.1/angular-sanitize.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
