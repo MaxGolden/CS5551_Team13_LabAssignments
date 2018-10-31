@@ -4,6 +4,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var objectId = require('mongodb').ObjectId;
 var assert = require('assert');
+var chalk = require('chalk')；
 var bodyParser = require("body-parser");
 var port = process.env.PORT || 8080;
 var express = require('express');
@@ -87,5 +88,5 @@ app.post('/delete', function (req, res, next) {
     })
 });
 app.listen(port,function () {
-    console.log("app running")
+    console.log(chalk.rgb(123, 45, 67).underline("app running"))
 });
